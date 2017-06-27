@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context
+                            http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <context:component-scan base-package="com.sky.aop" />
+
+    <aop:config>
+        <aop:aspect ref="logXmlAop">
+            <aop:pointcut id="log" expression="execution(* com.sky.aop.service.*.*.*(..))"/>
+            <aop:before pointcut-ref="log" method="beforeLog"/>
+            <aop:around pointcut-ref="log" method="aroundLog"/>
+            <aop:after pointcut-ref="log" method="after" />
+            <aop:after-returning pointcut-ref="log" method="afterRet" />
+            <aop:after-throwing pointcut-ref="log" method="afterError" />
+        </aop:aspect>
+    </aop:config>
+</beans>
